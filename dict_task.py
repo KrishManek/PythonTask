@@ -28,6 +28,7 @@ marks={}
 persubavgmarks ={}
 subjectwise = {}
 count = 0
+avgmarks={}
 for namesub, mark in mydict.items():
     name = namesub.split("-")[0]
     sub = namesub.split("-")[1]
@@ -47,21 +48,18 @@ for namesub, mark in mydict.items():
     else:
         subjectwise[sub] = mark
 
-print(f"mark {marks}")
-avgmarks={marks[name]/persubavgmarks[name] for name in marks}
-print(f"Average Marks: {avgmarks}")
+print(f"\n 1) Printing Total Marks of each students: {marks} \n")
 
-print(f"Subject Wise: {subjectwise}")
+avgmarks={name : round(marks[name]/persubavgmarks[name],2) for name in marks} #creating a new dict to caluclate & store average marks of each student
+print(f"\n 2) Average marks scored by individual students: {avgmarks} \n")
+
+print(f"\n 3) Subject Wise Highest Marks scored: {subjectwise} \n")
 
 # Highest marks
-res = max(marks,key=lambda i: marks[i])
-print(f"Highest Score Name: {res} Score : {marks[res]}")
-
-#Subject-Wise highest marks 
-
-
+res = max(marks,key=lambda i: marks[i]) #calculating highest total score 
+print(f"\n 4) Highest Total Score secured by Name: {res} Score : {marks[res]} \n")
 
 #sort function 
-sort = sorted(marks.items(), key=lambda x: x[1], reverse=True)
-print(f"Sort: {sort}")
+sort = sorted(marks.items(), key=lambda x: x[1], reverse=True) #using Sorted function to sort values #reverse = True for descending order
+print(f"\n 5) Sorting Values in Descending Order: {sort} \n")
 
