@@ -60,6 +60,6 @@ res = max(marks,key=lambda i: marks[i]) #calculating highest total score
 print(f"\n 4) Highest Total Score secured by Name: {res} Score : {marks[res]} \n")
 
 #sort function 
-sort = sorted(marks.items(), key=lambda x: x[1], reverse=True) #using Sorted function to sort values #reverse = True for descending order
+sort = dict(sorted(marks.items(), key=lambda x: x[1], reverse=True)) #using Sorted function to sort values #reverse = True for descending order
 print(f"\n 5) Sorting Values in Descending Order: {sort} \n")
 
