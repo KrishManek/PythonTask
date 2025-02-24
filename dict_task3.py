@@ -1,3 +1,4 @@
+#Dictonary datasets for performing various operations
 sales_data = {
     "Store_A": {"Laptop": 15, "Phone": 30, "Tablet": 10},
     "Store_B": {"Laptop": 25, "Phone": 20, "Tablet": 15},
@@ -47,8 +48,13 @@ topthreedata = {}
 totalcomplains = 0
 complainperc={}
 
-
+#Function to calculate total sales and highest sale store
 def calculate_totalsales(sales_data, product_prices):
+    """
+    here the data is being passed and using for loop dictonary iteration processs is being performed
+    where total sale per store is being caluclated and the stored in dictonary 
+    Also max function is being used to find the highest selling store 
+    """
     for store, product_details in sales_data.items():
         total_price[store] = 0
         for product_name, quantity in product_details.items():
@@ -57,85 +63,82 @@ def calculate_totalsales(sales_data, product_prices):
     return total_price, highessale
 
 def findtopemployee(employee_sales):
-    return gettopthree(employee_sales)
+    """
+    Here employee data is being sent and using common fuction top employee data and top 3 employees are 
+    being returened
+    """
+    topemployee, topemployeeval = gettopdata(employee_sales)
+    return gettopthree(employee_sales), topemployee, topemployeeval
 
 def complainpercentage(complaints):
-    topcomplain = ""
-    totalcomplains = 0
-    highestcomplain = 0
-    for name, no in complaints.items():
-        if highestcomplain < no:
-            highestcomplain = no 
-            topcomplain = name 
-        totalcomplains = no if totalcomplains == 0 else totalcomplains + no   
-    percentcompain = calcper(complaints,totalcomplains)
-    return totalcomplains, topcomplain, highestcomplain, percentcompain
+    """
+    Here complains data is being used and using common fuction top complain data, total no of complains
+    and percentage calculation(using function) is being performed and answers are being returened
+    """
+    topcomplain, topcomplainval = gettopdata(complaints) 
+    return gettotal(complaints), topcomplain,topcomplainval, calcper(complaints,gettotal(complaints))
 
+def getbestmarketer(marketing_performance):
+    """
+    Here marketing data is being used and using common fuction top data, and get average 
+    is being performed and answers are being returened
+    """
+    topperformer, topperformerval = gettopdata(marketing_performance)
+    return topperformer, topperformerval, getaverage(gettotal(marketing_performance),len(marketing_performance))    
+
+def getmovierating(movie_ratings):
+    """
+    Here movie rating data is being used and using common fuction top data, to three values and get average 
+    is being performed and answers are being returened
+    """
+    topmovie,topmovieval = gettopdata(movie_ratings)
+    return getaverage(gettotal(movie_ratings), len(movie_ratings)), gettopthree(movie_ratings),topmovie,topmovieval
+
+# Common functions to reuse further 
+
+# Function for percentage calculation 
 def calcper(complaints,totalcomplains):
     for name, no in complaints.items():
         complainperc[name] = (no/totalcomplains)*100
     return complainperc
 
-def getbestmarketer(marketing_performance):
-    topperformerval = total =  count = 0
-    for name,value in marketing_performance.items():
-        if topperformerval < value:
-            topperformer = name 
-            topperformerval = value
-        total = value if total == 0 else total + value
-        count+=1
-    average = getaverage(total,count)
-    return topperformer, topperformerval, average    
-
+# Function to get top three data 
 def gettopthree(data):
     topthreedata={}
-    sorteddata = dict(sorted(data.items(), key=lambda i : i[1], reverse = True))
-    count = 0
-    for name,sale in sorteddata.items(): 
-        if count > 2:
-            return topthreedata,top
-        else:
-            topthreedata[name] = sale
-            count += 1
-        if count == 1:
-            top = name
+    topthreedata = dict(sorted(data.items(), key=lambda i : i[1], reverse = True)[:3])
+    return topthreedata
 
-def getcount(data):
-    count = 0
-    for name,value in data.items():
-        count+=1
-    return count
-
+# Function to get average of data 
 def getaverage(total,noofcount):
     return total/noofcount
 
-def getmovierating(movie_ratings):
-    topthreemovies, topmovie = gettopthree(movie_ratings)
-    return getaverage(gettotal(movie_ratings), getcount(movie_ratings)), topthreemovies,topmovie
+# Function to get top data 
+def gettopdata(data):
+    return max(data,key = data.get), data[max(data,key = data.get)]
 
+# Function to get total
 def gettotal(data):
     total = 0
     for key,value in data.items():
         total = value if total == 0 else total + value
     return round(total,3)
 
-
-
+#Function call and store in variables 
 total_sales, highestsalestore = calculate_totalsales(sales_data, product_prices)
-topthreeemployes, topemployee = findtopemployee(employee_sales)
+topthreeemployes, topemployee, topemployeesale = findtopemployee(employee_sales)
 totalcomplains, topcomplain, highestcomplain, percentcompain = complainpercentage(complaints)
 topperformer, topperformerval, averagemarketing =  getbestmarketer(marketing_performance)
-averagemovierating, topthreemovies, topmovie = getmovierating(movie_ratings)
+averagemovierating, topthreemovies, topmovie, topmovieval = getmovierating(movie_ratings)
 
-
+#Printing the whole Data
 print(f"Total sales of each store: {total_sales}")
 print(f"Highest sale store: {highestsalestore} with no of sales as {total_sales[highestsalestore]}")
 print(f"Top 3 employees are : {topthreeemployes}")
-print(f"Highest sale employee: {topemployee} with no of sales as {topthreeemployes[topemployee]}")
+print(f"Highest sale employee: {topemployee} with no of sales as {topemployeesale}")
 print(f"Total no of Complains is {totalcomplains}")
 print(f"Highest complain {topcomplain} with no of complains {highestcomplain}")
 print(f"Complain percentage : {percentcompain}")
-print(f"Top performer is {topperformer} with percentage {topperformerval}%")
+print(f"Top marketing performer is {topperformer} with percentage {topperformerval}%")
 print(f"Average marketing rate : {averagemarketing}%")
 print(f"Average movie rating is : {averagemovierating}")
-print(f"Top 3 movies {topthreemovies}, Top Movie {topmovie} with rating {topthreemovies[topmovie]}")
+print(f"Top 3 movies {topthreemovies}, Top Movie {topmovie} with rating {topmovieval}")
