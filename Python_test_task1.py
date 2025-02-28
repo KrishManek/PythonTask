@@ -34,7 +34,7 @@ sale_data = [
 #https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html
 
 df  = pd.DataFrame(sale_data)
-df.columns = df.columns.str.capitalize()
+df.columns = df.columns.str.capitalize() #https://stackoverflow.com/questions/19726029/how-can-i-make-pandas-dataframe-column-headers-all-lowercase
 for items in df:
     df['Subtotal'] = df['Price'] * df['Quantity']
 print (df)
