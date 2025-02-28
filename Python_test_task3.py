@@ -3,14 +3,24 @@ class employee:
     #employees={'name':'ename','employeeid':eid,'salary':salary,'role':'developer/manager','extra_info':'Dept/lang'}
     def display_all_employees():
         print(employee.employees)
+
     def filter_by_role(role):
+        f = 0
         for i in employee.employees:
             if i['role'] == role:
+                f = 1
                 print(f"{i['name']}, {i['id']}, {i['salary']}, {i['role']}, {i['extra_info']}")
+        if f == 0:
+            print(f"No Employees found  for role of {role}")
+
     def filter_by_salary(min_salary,max_salary):
+        f = 0
         for i in employee.employees:
             if i['salary'] >= min_salary and i['salary'] <= max_salary:
+                f = 1
                 print(f"{i['name']}, {i['id']}, {i['salary']}, {i['role']}, {i['extra_info']}")
+        if f == 0:
+            print(f"No Employees found for salary range between {min_salary} and {max_salary}")
 
     def create_emp():
         try:
@@ -60,6 +70,7 @@ class employee:
         except Exception as e:
             print(e)
 emp = employee
+
 noofemp = int(input("Enter no of employees you want to create: "))
 for i in range(noofemp):
     data = emp.create_emp()

@@ -34,8 +34,17 @@ sale_data = [
 #https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html
 
 df  = pd.DataFrame(sale_data)
-df.columns = df.columns.str.capitalize() #https://stackoverflow.com/questions/19726029/how-can-i-make-pandas-dataframe-column-headers-all-lowercase
+df.columns = df.columns.str.capitalize()
 for items in df:
     df['Subtotal'] = df['Price'] * df['Quantity']
 print (df)
-df.to_excel('salesdata.xlsx',engine='xlsxwriter')
+#https://medium.com/codeptivesolutions/https-medium-com-nensi26-formatting-in-excel-sheet-using-xlsxwriter-part-1-2c2c547b2bea
+""" writer = pd.ExcelWriter('salesdata.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name="Sheet1", index=False)
+workbook = writer.book
+worksheet = writer.sheets['Sheet1']
+cell_format = workbook.add_format()
+cell_format.set_bold()
+worksheet.set_column("A:A",None,cell_format) 
+writer.close()"""
+df.to_excel('salesdata.xlsx',engine='xlsxwriter', index=False)
