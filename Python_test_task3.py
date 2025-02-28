@@ -16,10 +16,18 @@ class employee:
         try:
             emp = {}
             employee_name = input("Enter Employee Name: ").capitalize()
-            employee_id =int(input("Enter Employee Id: ")) 
+            if not employee_name.isalpha():
+                employee_name = input("Enter Employee Name in alphabets only: ").capitalize()
+            employee_id =int(input("Enter Employee Id: "))
+            if not employee_id.is_integer():
+                  employee_id =int(input("Enter Employee Id in numeric: "))
             salary = int(input("Enter Employee Salary: "))
+            if not salary.is_integer():
+                  salary =int(input("Enter Employee Salary in numeric: "))
             employee_role = input("Enter Employee Role: ").capitalize()
             extra_info =input("Enter Department for Manager OR Pogramming Language for Deveploper: ").capitalize()
+            if not extra_info.isalpha():
+                extra_info =input("Enter Department for Manager OR Pogramming Language for Deveploper in alphabets only: ").capitalize()
             if employee_role == "Developer" or employee_role == "Manager":
                 emp["name"] = employee_name
                 emp["id"] = employee_id
