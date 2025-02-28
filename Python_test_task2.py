@@ -21,9 +21,7 @@ def countduplicate(number):
 def printduplicateval(countduplicateno):
     print("Duplicate Numbers and Their Counts:")
     for key, value in countduplicateno.items():
-        if value == 1:
-            pass
-        else:
+        if value < 1:
             print(f"{key} appears {value} times")
 
 countduplicate(numbers)
