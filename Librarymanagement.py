@@ -5,6 +5,7 @@ class Library:
     def __init__(self):
         self.books = {}
         self.borrowed_books = {}
+        self.overduebooks = {}
 
     def add_book(self, title, author, quantity):
         if title in self.books:
@@ -59,8 +60,8 @@ class Library:
                 if user_name not in self.borrowed_books:
                     self.borrowed_books[user_name] = {}
 
-                if len(self.borrowed_books[user_name]) >= 2:
-                    print("You can only borrow a maximum of 2 books at a time.")
+                if len(self.borrowed_books[user_name]) >= 3:
+                    print("You can only borrow a maximum of 3 books at a time.")
                     return
 
                 borrow_date = datetime.now()
@@ -76,6 +77,14 @@ class Library:
     def return_book(self, user_name, title):
         try:
             if user_name in self.borrowed_books and title in self.borrowed_books[user_name]:
+                duedate =datetime.strptime(self.borrowed_books[user_name][title][1],'%Y-%m-%d')
+                dt = datetime.strptime('20250320','%Y%m%d')
+                #if datetime.now() < duedate:
+                if dt > duedate:
+                    #duedays = (datetime.now() - duedate).days
+                    duedays = (dt - duedate).days
+                    penalty = 20*duedays
+                    print(f"You are returning {title} book {duedays} late! Please pay the penalty of Rs.{penalty}! Next time Please return book on time! ThankYou")
                 del self.borrowed_books[user_name][title]
                 if not self.borrowed_books[user_name]:
                     del self.borrowed_books[user_name]
@@ -85,6 +94,8 @@ class Library:
             else:
                 raise KeyError("Book not borrowed or incorrect user.")
         except KeyError as e:
+            print(e)
+        except Exception as e:
             print(e)
 
     def view_borrowed_books(self, user_name):
@@ -98,7 +109,7 @@ class Library:
 library = Library()
 counter = 1
 while True:
-    sleep(3)
+    sleep(2)
     print(
         "Library Management System"
         "\n1. Add Book"
